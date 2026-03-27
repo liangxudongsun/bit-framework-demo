@@ -1,7 +1,6 @@
 import { _decorator, JsonAsset, Node, sys } from "cc";
 
 import { Debug } from "./Debug";
-import { ECSHelper } from "./ecs/ECSHelper";
 import { CORE, ecs, FGUI, UI } from "./header";
 import { HomeWindow } from "./UI/HomeWindow";
 
@@ -13,9 +12,6 @@ export class GameEntry extends CORE.CocosEntry {
     @property(Node)
     // eslint-disable-next-line @typescript-eslint/naming-convention
     private root: Node = null;
-    @property(Node)
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    private ecsCamera: Node = null;
     @property(JsonAsset)
     // eslint-disable-next-line @typescript-eslint/naming-convention
     private entityConfig: JsonAsset = null;
@@ -28,8 +24,6 @@ export class GameEntry extends CORE.CocosEntry {
         }
         CORE.Platform.deviceId = deviceId;
         Debug.register();
-
-        ECSHelper.setCameraNode(this.ecsCamera);
         ecs.Data.parse(this.entityConfig.json as Record<string, unknown>);
 
         FGUI.UIPackage.loadPackage("ui/manual/Basics", () => {

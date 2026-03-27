@@ -63,9 +63,9 @@
         "TagEnemy": {}
     },
     "Player": {
-        "Direction": {
-            "x": 0,
-            "y": 0
+        "AimInput": {
+            "dx": 0,
+            "dy": 0
         },
         "DrawType": {
             "color": [
@@ -77,13 +77,9 @@
             "shapeType": 1,
             "size": 50
         },
-        "FaceDirection": {
+        "Direction": {
             "x": 0,
             "y": 1
-        },
-        "Input": {
-            "dx": 0,
-            "dy": 0
         },
         "Position": {
             "x": 0,
@@ -107,9 +103,6 @@
         "Shooter": {
             "cooldown": 0.3,
             "elapsed": 5
-        },
-        "Speed": {
-            "value": 220
         },
         "TagHero": {}
     },

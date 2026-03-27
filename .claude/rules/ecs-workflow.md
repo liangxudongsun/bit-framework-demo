@@ -30,6 +30,11 @@ paths:
 - 系统只包含逻辑，禁止存储持久状态（单例数据用单例组件）
 - 装饰器解构：`const { ecsystem } = ecs._ecsdecorator`
 
+## 实体创建注意事项
+- `createEntity` / `addComponent` 的组件添加是缓冲的（帧结束才生效），创建后不能立即 `getComponent` 获取组件
+- 需要设置初始值时，使用 `createEntity` 的覆盖参数：`world.createEntity("Player", { Position: { x: 0, y: -100 } })`
+- 只有在下一帧的系统 `update()` 中，组件才可通过 `getComponent` 正常访问
+
 ## 实体配置
 - 位置：`extensions-config/entity/<entityName>.json`
 - 配置描述实体包含哪些组件及默认属性值

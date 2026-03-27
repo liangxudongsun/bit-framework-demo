@@ -2,11 +2,11 @@
  * @Author: Gongxh
  * @Date: 2026-03-23
  * @Description: 输入管理器
- * 管理多个输入源，按优先级选取活跃输入写入 ECS Input 组件
+ * 管理多个输入源，按优先级选取活跃输入写入 ECS AimInput 组件
  */
 
 import { ecs } from "../../header";
-import { Input } from "../component/basics/Input";
+import { AimInput } from "../component/basics/AimInput";
 import { IInputSource } from "./IInputSource";
 
 export class InputManager {
@@ -34,7 +34,7 @@ export class InputManager {
         source.dispose();
     }
 
-    /** 轮询所有输入源，将最高优先级的活跃输入写入 Input 组件 */
+    /** 轮询所有输入源，将最高优先级的活跃输入写入 AimInput 组件 */
     public update(): void {
         if (!this._world) {
             return;
@@ -53,10 +53,10 @@ export class InputManager {
             }
         }
 
-        const playerInput = this._world.getComponent(this._playerEntity, Input);
-        if (playerInput) {
-            playerInput.dx = dx;
-            playerInput.dy = dy;
+        const aimInput = this._world.getComponent(this._playerEntity, AimInput);
+        if (aimInput) {
+            aimInput.dx = dx;
+            aimInput.dy = dy;
         }
     }
 

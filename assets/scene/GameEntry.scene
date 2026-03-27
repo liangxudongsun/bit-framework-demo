@@ -1223,9 +1223,6 @@
     "root": {
       "__id__": 6
     },
-    "ecsCamera": {
-      "__id__": 3
-    },
     "entityConfig": {
       "__uuid__": "a6c76f07-e1db-4c5e-9ed7-b1e52c0046b8",
       "__expectedType__": "cc.JsonAsset"

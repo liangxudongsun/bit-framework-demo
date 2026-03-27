@@ -4,7 +4,7 @@
  * @Description: 射击系统，根据 Shooter 冷却计时和 ShootPattern 弹道配置自动创建子弹实体
  */
 import { ecs } from "../../../header";
-import { FaceDirection } from "../../component/basics/FaceDirection";
+import { Direction } from "../../component/basics/Direction";
 import { Position } from "../../component/basics/Position";
 import { ShootCycle } from "../../component/shoot/ShootCycle";
 import { Shooter } from "../../component/shoot/Shooter";
@@ -16,11 +16,11 @@ const DEG_TO_RAD = Math.PI / 180;
 @ecsystem("ShooterSystem", { describe: "根据 Shooter 冷却计时和 ShootPattern 配置自动创建子弹" })
 export class ShooterSystem extends ecs.System {
     protected onInit(): void {
-        this.matcher.allOf(Shooter, ShootPattern, FaceDirection, Position);
+        this.matcher.allOf(Shooter, ShootPattern, Direction, Position);
     }
 
     public update(dt: number): void {
-        for (const [entity, shooter, pattern, face, pos] of this.query.iterate4(Shooter, ShootPattern, FaceDirection, Position)) {
+        for (const [entity, shooter, pattern, face, pos] of this.query.iterate4(Shooter, ShootPattern, Direction, Position)) {
             // ShootCycle：周期到时触发一次散射，然后重置周期
             const cycle = this.world.getComponent(entity, ShootCycle);
             if (cycle) {
@@ -45,7 +45,7 @@ export class ShooterSystem extends ecs.System {
     }
 
     /** 根据弹道配置发射子弹 */
-    private shoot(pattern: ShootPattern, face: FaceDirection, pos: Position): void {
+    private shoot(pattern: ShootPattern, face: Direction, pos: Position): void {
         switch (pattern.type) {
             case EShootType.SINGLE:
                 this.spawnBullet(pos, face.x, face.y);
@@ -60,7 +60,7 @@ export class ShooterSystem extends ecs.System {
     }
 
     /** 散射：将 count 颗子弹均匀分布在 spreadAngle 夹角内 */
-    private spawnScatter(pos: Position, face: FaceDirection, pattern: ShootPattern): void {
+    private spawnScatter(pos: Position, face: Direction, pattern: ShootPattern): void {
         const count = pattern.bulletCount;
         const spreadAngle = pattern.spreadAngle;
 

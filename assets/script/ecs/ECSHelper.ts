@@ -6,9 +6,8 @@
 import { Node } from "cc";
 
 import { CORE, ecs, QT } from "../header";
-import { CameraFollowSystem } from "./system/basics/CameraFollowSystem";
+import { AutoAimSystem } from "./system/basics/AutoAimSystem";
 import { FacingSystem } from "./system/basics/FacingSystem";
-import { InputSystem } from "./system/basics/InputSystem";
 import { LifeTimeSystem } from "./system/basics/LifeTimeSystem";
 import { MoveSystem } from "./system/basics/MoveSystem";
 import { RenderSystem } from "./system/basics/RenderSystem";
@@ -36,7 +35,6 @@ export class ECSHelper {
 
     private static _world: ecs.World;
     private static _stageNode: Node;
-    private static _cameraNode: Node;
     private static _layers: Node[] = [];
     private static _singleton: ecs.Entity;
 
@@ -46,16 +44,6 @@ export class ECSHelper {
 
     public static get node(): Node {
         return this._stageNode;
-    }
-
-    /** 摄像机节点 */
-    public static get cameraNode(): Node {
-        return this._cameraNode;
-    }
-
-    /** 由外部设置摄像机节点引用 */
-    public static setCameraNode(node: Node): void {
-        this._cameraNode = node;
     }
 
     /** 单例实体 */
@@ -104,7 +92,7 @@ export class ECSHelper {
 
         // 基础系统组
         const basicGroup = new ecs.SystemGroup("BasicSystemGroup", 1);
-        basicGroup.addSystem(new InputSystem())
+        basicGroup.addSystem(new AutoAimSystem())
             .addSystem(new MoveSystem())
             .addSystem(new FacingSystem())
             .addSystem(new ShooterSystem())
@@ -119,8 +107,7 @@ export class ECSHelper {
 
         // 渲染系统组 这个放到最后
         const renderGroup = new ecs.SystemGroup("RenderSystemGroup", 1);
-        renderGroup.addSystem(new RenderSystem())
-            .addSystem(new CameraFollowSystem());
+        renderGroup.addSystem(new RenderSystem());
 
         world.addSystem(basicGroup).addSystem(generateGroup).addSystem(renderGroup);
 

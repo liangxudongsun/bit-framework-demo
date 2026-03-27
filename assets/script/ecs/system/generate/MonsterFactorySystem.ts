@@ -1,7 +1,7 @@
 /**
  * @Author: Gongxh
  * @Date: 2026-03-23
- * @Description: 怪物工厂系统，每2秒在随机位置生成一个敌人实体
+ * @Description: 怪物工厂系统，每2秒从屏幕顶部外侧生成一个敌人实体
  */
 import { CORE, ecs } from "../../../header";
 import { ECSHelper } from "../../ECSHelper";
@@ -11,7 +11,10 @@ const { ecsystem } = ecs._ecsdecorator;
 /** 生成间隔（秒） */
 const SPAWN_INTERVAL = 2;
 
-@ecsystem("MonsterFactorySystem", { describe: "每2秒在随机位置生成一个敌人" })
+/** 生成位置在屏幕顶部外侧的偏移量 */
+const SPAWN_OFFSET_Y = 30;
+
+@ecsystem("MonsterFactorySystem", { describe: "每2秒从屏幕顶部外侧生成一个敌人" })
 export class MonsterFactorySystem extends ecs.System {
     /** 累计计时 */
     private _elapsed: number = 0;
@@ -27,21 +30,16 @@ export class MonsterFactorySystem extends ecs.System {
         }
         this._elapsed -= SPAWN_INTERVAL;
 
-        // 在屏幕范围内随机生成位置
+        // X 在屏幕宽度范围内随机，Y 在屏幕顶部外侧
         const halfW = CORE.Screen.ScreenWidth / 2;
         const halfH = CORE.Screen.ScreenHeight / 2;
         const x = (Math.random() - 0.5) * 2 * halfW;
-        const y = (Math.random() - 0.5) * 2 * halfH;
-
-        // 随机方向（单位向量）
-        const angle = Math.random() * Math.PI * 2;
-        const dirX = Math.cos(angle);
-        const dirY = Math.sin(angle);
+        const y = halfH + SPAWN_OFFSET_Y;
 
         ECSHelper.world.createEntity("Enemy", {
             Position: { x, y },
-            Direction: { x: dirX, y: dirY },
-            Speed: { value: 80 }
+            Direction: { x: 0, y: -1 },
+            Speed: { value: 25 }
         });
     }
 

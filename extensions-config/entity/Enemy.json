@@ -20,7 +20,7 @@
         {
             "name": "Speed",
             "props": {
-                "value": 0
+                "value": -0.1
             }
         },
         {

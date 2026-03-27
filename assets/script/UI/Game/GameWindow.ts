@@ -2,8 +2,8 @@
  * @Author: Gongxh
  * @Date: 2026-03-18
  * @Description: ECS 小游戏窗口
- * - 打开时在 FGUI stage 组件内创建 ECS 舞台节点，初始化 ECS 世界和四叉树单例
- * - 输入委托给 InputManager 处理（支持触摸摇杆、键盘等多种输入源）
+ * - 打开时在 FGUI stage 组件内创建 ECS 舞台节点，初始化 ECS 世界
+ * - 输入委托给 InputManager 处理（控制瞄准方向）
  * - 关闭时清理输入、销毁舞台节点和 ECS 世界
  */
 
@@ -13,7 +13,7 @@ import { ECSHelper } from "../../ecs/ECSHelper";
 import { InputManager } from "../../ecs/input/InputManager";
 import { KeyboardInputSource } from "../../ecs/input/KeyboardInputSource";
 import { TouchInputSource } from "../../ecs/input/TouchInputSource";
-import { FGUI, UI } from "../../header";
+import { CORE, FGUI, UI } from "../../header";
 
 const { uiclass, uiprop } = UI._uidecorator;
 
@@ -54,15 +54,13 @@ export class GameWindow extends UI.Window {
         ECSHelper.setStageNode(this._stageNode);
         ECSHelper.register();
 
-        // 创建四叉树单例
-        // const halfW = CORE.Screen.ScreenWidth * 0.5;
-        // const halfH = CORE.Screen.ScreenHeight * 0.5;
-        // const qtSingleton = ECSHelper.addSingleton(QuadTree);
-        // qtSingleton.quadTree = new QT.QuadTree(-halfW, -halfH, halfW * 2, halfH * 2);
+        // 创建玩家实体，固定在屏幕底部
+        const halfH = CORE.Screen.ScreenHeight / 2;
+        const { entity } = ECSHelper.world.createEntity("Player", {
+            Position: { x: 0, y: -halfH + 80 }
+        });
 
-        // 通过配置创建玩家实体
-        const { entity } = ECSHelper.world.createEntity("Player");
-        // 注册输入源
+        // 注册输入源（用于控制瞄准方向）
         this._inputManager = new InputManager(ECSHelper.world, entity);
         this._inputManager.addSource(new TouchInputSource());
         this._inputManager.addSource(new KeyboardInputSource());
