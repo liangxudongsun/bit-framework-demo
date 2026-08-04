@@ -1,8 +1,9 @@
-import { _decorator, JsonAsset, Node, sys } from "cc";
+import { _decorator, Asset, JsonAsset, Node, sys } from "cc";
 
 import { Debug } from "./Debug";
-import { CORE, ecs, FGUI, UI } from "./header";
+import { ASSETS, CORE, ecs, FGUI, UI } from "./header";
 import { HomeWindow } from "./UI/HomeWindow";
+import { WindowHelper } from "./WindowHelper";
 
 const { ccclass, property, menu } = _decorator;
 
@@ -16,7 +17,7 @@ export class GameEntry extends CORE.CocosEntry {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     private entityConfig: JsonAsset = null;
 
-    public onInit(): void {
+    public async onInit(): Promise<void> {
         let deviceId = sys.localStorage.getItem("xBBres") as string;
         if (!deviceId || deviceId === "") {
             deviceId = "browser@" + Date.now().toString();
@@ -24,19 +25,36 @@ export class GameEntry extends CORE.CocosEntry {
         }
         CORE.Platform.deviceId = deviceId;
         Debug.register();
+        WindowHelper.register();
         ecs.Data.parse(this.entityConfig.json as Record<string, unknown>);
 
-        FGUI.UIPackage.loadPackage("ui/manual/Basics", () => {
-            this.onResourceLoadComplete();
+        this.loadBasicsRes().then(() => {
+            this.intoGame();
         });
     }
 
-    /** 资源加载完成 */
-    private onResourceLoadComplete(): void {
-        // 1.5秒后打开 HomeWindow 窗口
-        CORE.GlobalTimer.startTimer(() => {
-            this.intoGame();
-        }, 1.5, 0);
+    /** 加载基础资源 */
+    private async loadBasicsRes(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const configs = [
+                // 加载必须的UI包
+                { path: "manual", type: Asset, isFile: false, bundle: "fgui" }
+            ];
+            const assetLoader = new ASSETS.AssetLoader("basics-res");
+            assetLoader.setCallbacks({
+                complete: () => {
+                    FGUI.UIPackage.addPackage(ASSETS.AssetPool.getBundle("fgui"), "manual/Basics");
+                    resolve();
+                },
+                progress: (_percent: number) => {
+
+                },
+                fail: (code: number, msg: string) => {
+                    reject(new Error(`load basics res fail: ${code} ${msg}`));
+                }
+            });
+            assetLoader.start(configs);
+        });
     }
 
     private intoGame(): void {

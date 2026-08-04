@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "e79e7e68-6506-4516-8ef2-f6b50b340044",
+  "uuid": "f2bf2b3d-54c5-4c2d-9bc0-f76e8fa6b46b",
   "files": [
     ".json",
     ".png"
@@ -10,7 +10,7 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "e79e7e68-6506-4516-8ef2-f6b50b340044@6c48a",
+      "uuid": "f2bf2b3d-54c5-4c2d-9bc0-f76e8fa6b46b@6c48a",
       "displayName": "Basics_atlas0",
       "id": "6c48a",
       "name": "texture",
@@ -22,7 +22,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "e79e7e68-6506-4516-8ef2-f6b50b340044",
+        "imageUuidOrDatabaseUri": "f2bf2b3d-54c5-4c2d-9bc0-f76e8fa6b46b",
         "visible": false
       },
       "ver": "1.0.22",
@@ -34,9 +34,9 @@
     }
   },
   "userData": {
-    "fixAlphaTransparencyArtifacts": true,
-    "hasAlpha": true,
     "type": "texture",
-    "redirect": "e79e7e68-6506-4516-8ef2-f6b50b340044@6c48a"
+    "fixAlphaTransparencyArtifacts": false,
+    "hasAlpha": true,
+    "redirect": "f2bf2b3d-54c5-4c2d-9bc0-f76e8fa6b46b@6c48a"
   }
 }

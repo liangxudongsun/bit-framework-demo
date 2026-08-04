@@ -9,6 +9,6 @@ import * as CORE from "@gongxh/bit-core";
 import * as ecs from "@gongxh/bit-ecs";
 import * as QT from "@gongxh/bit-quadtree";
 import * as UI from "@gongxh/bit-ui";
-import * as FGUI from "fairygui-cc";
+import * as FGUI from "@gongxh/fairygui-cc";
 export { ASSETS, CORE, ecs, FGUI, QT, UI };
 

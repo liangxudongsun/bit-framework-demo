@@ -92,7 +92,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 360.00000000000006,
+      "x": 359.99999999999994,
       "y": 780,
       "z": 0
     },
@@ -853,7 +853,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 720,
+      "width": 719.9999999999998,
       "height": 1560
     },
     "_anchorPoint": {
@@ -1219,7 +1219,7 @@
     "_enabled": true,
     "__prefab": null,
     "fps": 60,
-    "enableDebug": true,
+    "enableDebug": false,
     "root": {
       "__id__": 6
     },
@@ -1227,7 +1227,7 @@
       "__uuid__": "a6c76f07-e1db-4c5e-9ed7-b1e52c0046b8",
       "__expectedType__": "cc.JsonAsset"
     },
-    "_id": "8cJIeJ9KdEh5Y1PEMEBOka"
+    "_id": "306kOYQQZDZpjRqKgpZQ9a"
   },
   {
     "__type__": "cc.PrefabInfo",
